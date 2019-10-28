@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import Logo from './logo';
 import LoginPanel from './loginPanel';
 
@@ -38,7 +38,7 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Logo
           animFinished={this.onLogoAnimFinished}
           orientation={this.state.orientation}
@@ -47,14 +47,13 @@ class Login extends Component {
           show={this.state.logoAnimFinished}
           orientation={this.state.orientation}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
   },
 });

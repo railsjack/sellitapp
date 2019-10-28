@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Animated, Easing, Image, StyleSheet, Text, View} from 'react-native';
 
+import LoginForm from './loginForm';
 import BackImage from '../../../assets/images/loginPanel.jpg';
 
 class LoginPanel extends Component {
@@ -52,7 +53,11 @@ class LoginPanel extends Component {
             opacity: imageAnim,
           }}>
           <Image
-            style={styles.imageStyle}
+            style={
+							this.props.orientation === 'portrait'
+							? styles.imageStylePortrait
+							: styles.imageStyleLandscape
+						}
             source={BackImage}
             resizeMode={'contain'}
           />
@@ -65,7 +70,7 @@ class LoginPanel extends Component {
               outputRange: [100, 0],
             }),
           }}>
-          <Text>FORM</Text>
+          <LoginForm />
         </Animated.View>
       </View>
     );
@@ -74,9 +79,12 @@ class LoginPanel extends Component {
 
 const styles = StyleSheet.create({
   container: {},
-  imageStyle: {
+  imageStylePortrait: {
     width: 270,
     height: 150,
+  },
+  imageStyleLandscape: {
+    height: 0,
   },
 });
 

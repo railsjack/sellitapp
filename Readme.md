@@ -309,6 +309,7 @@ Login/logo.js
         <Text>Blah blah</Text>
       </Animated.View>
   Implementation
+  ```
     import Animated, Easing
     state
       sellAnim: new Animated.Value(0),
@@ -343,7 +344,7 @@ Login/logo.js
     }}>
       <Text>It</Text>
     </Animated.View>
-
+  ```
 ## Create a new Component Logo
   Concept about Dimensions
     - Getting orientaion
@@ -358,6 +359,7 @@ Login/logo.js
   Concept about that
   It based on the theory that getDerivedStateFromProps fires componentDidUpdate
 
+```
   static getDerivedStateFromProps(nextProps, prevProps) {
     if (nextProps.someValue !== prevProps.someValue){
       return { someState: nextProps.someValue }
@@ -372,5 +374,67 @@ Login/logo.js
       this.classMethod();
     }
   }
+```
 
-  
+  ## Create a login form
+  Concept of the login form structure for standard app
+
+  ```
+  state = {
+    form: {
+      email: {
+        value: '',
+        valid: false,
+        type: 'textinput',
+        rules: {
+          isEmail: true
+        }
+      },
+      password: {
+        value: '',
+        valid: false,
+        type: 'textinput',
+        rules: {
+          minLength: 6
+        }
+      },
+      confirmPassword: {
+        value: '',
+        valid: false,
+        type: 'textinput',
+        rules: {
+          confirmPass: 'password'
+        }
+      }
+    }
+  }
+  ```
+
+  ```
+  const input = (props) => {
+    let template = null;
+    switch(props.type) {
+      case "textinput":
+        template = 
+        <TextInput underlineCOlorAndroid="transparent"   
+          {...props}
+          style={[styles.input, props.overrideStyle]}
+        />
+      break;
+      default:
+        return template;
+    }
+    return template;
+  }
+
+  const styles = StyleSheet.create({
+    input: {
+      width: "100%",
+      borderBottomWidth: 1,
+      borderBottomColor: "#eaeaea",
+      fontsize: 18,
+      padding: 5,
+      marginTop: 10
+    }
+  });
+  ```
