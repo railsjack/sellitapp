@@ -353,5 +353,24 @@ Login/logo.js
       Dimensions.addEventListener('change', callback)
     - Removing Event listener for change of Orientation
       Dimensions.removeEventListener('change')
-  
 
+## Replacing UNSAFE_componentWillReceiveProps with getDerivedStateFromProps
+  Concept about that
+  It based on the theory that getDerivedStateFromProps fires componentDidUpdate
+
+  static getDerivedStateFromProps(nextProps, prevProps) {
+    if (nextProps.someValue !== prevProps.someValue){
+      return { someState: nextProps.someValue }
+    }
+    else return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.someValue !== this.props.someValue){
+      // perform some operations here
+      this.setState({someState: someValue})
+      this.classMethod();
+    }
+  }
+
+  

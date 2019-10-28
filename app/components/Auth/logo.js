@@ -20,7 +20,9 @@ class Logo extends Component {
         duration: 1000,
         easing: Easing.easeOutCubic,
       }),
-    ]).start(() => {});
+    ]).start(() => {
+      this.props.animFinished && this.props.animFinished();
+    });
   }
 
   render() {

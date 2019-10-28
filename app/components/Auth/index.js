@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Logo from './logo';
+import LoginPanel from './loginPanel';
 
 import {
   getOrientation,
@@ -11,9 +12,9 @@ import {
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       orientation: getOrientation(),
+      logoAnimFinished: false,
     };
 
     setOrientationListener(this.changeOrientation);
@@ -29,18 +30,32 @@ class Login extends Component {
     removeOrientationListener();
   }
 
+  onLogoAnimFinished = () => {
+    this.setState({
+      logoAnimFinished: true,
+    });
+  };
+
   render() {
     return (
-      <>
-        <Logo orientation={this.state.orientation} />
-      </>
+      <View style={styles.container}>
+        <Logo
+          animFinished={this.onLogoAnimFinished}
+          orientation={this.state.orientation}
+        />
+        <LoginPanel
+          show={this.state.logoAnimFinished}
+          orientation={this.state.orientation}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  loginText: {
-    fontFamily: 'Roboto-Regular',
+  container: {
+    flex: 1,
+    alignItems: 'center',
   },
 });
 
