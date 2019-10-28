@@ -343,3 +343,15 @@ Login/logo.js
     }}>
       <Text>It</Text>
     </Animated.View>
+
+## Create a new Component Logo
+  Concept about Dimensions
+    - Getting orientaion
+      import Dimensions from react-native
+      Dimensions.get("window").height > 500 // This means portrait
+    - Adding Event listener for change of Orientation
+      Dimensions.addEventListener('change', callback)
+    - Removing Event listener for change of Orientation
+      Dimensions.removeEventListener('change')
+  
+

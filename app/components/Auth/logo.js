@@ -25,8 +25,14 @@ class Logo extends Component {
 
   render() {
     const {sellAnim, itAnim} = this.state;
+    const orientation = this.props.orientation;
     return (
-      <View style={styles.container}>
+      <View
+        style={
+          orientation === 'portrait'
+            ? styles.logoStylesPortrait
+            : styles.logoStylesLandscape
+        }>
         <Animated.View
           style={{
             opacity: sellAnim,
@@ -49,13 +55,21 @@ class Logo extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  logoStylesPortrait: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 80,
     maxHeight: 100,
+  },
+  logoStylesLandscape: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    maxHeight: 50,
   },
   sell: {
     fontSize: 30,
