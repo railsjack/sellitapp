@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text} from 'react-native';
+import Logo from './logo';
 
 class Login extends Component {
   render() {
-    return <Text style={styles.loginText}> Login </Text>;
+    return (
+      <>
+        <Logo />
+      </>
+    );
   }
 }
 

@@ -269,3 +269,77 @@ const RootNavitator = () =>
 
 export default RootNavitator;
 ```
+
+
+# Implement features on Login
+## Touching Login screen
+Login/index.js
+- Put ScrollView into Login screen
+- Put a container
+  flex: 1, backgroundColor: #fff, alignItems: center
+- Put an Image (loginPanel.jpg)
+- Put a new component Logo
+
+## Create a new Component Logo
+Login/logo.js
+- Put Image
+- Add some stylings
+  flex: 1, flexDirection: row
+  marginTop: 50, maxHeight: 100
+- Add animation
+  Concept about Animated
+    Since when: 
+      new Animated.Value()
+    Due to:
+      sequence[
+        Animated.time(sinceWhen, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.easeCubic
+        })]
+      .start(callback)
+    What to animate: 
+      <Animated.View style={{
+        opacity: sinceWhen,
+        top: sinceWhen.interpolate({
+          inputRange: [0, 1],
+          outputRange: [100, 0]
+        })
+      }}>
+        <Text>Blah blah</Text>
+      </Animated.View>
+  Implementation
+    import Animated, Easing
+    state
+      sellAnim: new Animated.Value(0),
+      itAnim: new Animated.Value(0)
+    willMount
+      Animated.sequence([
+        Animated.timing(sellAnim, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.easeOutCubic
+        }),
+        Animated.timing(itAnim, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.easeOutCubic
+        })
+      ]).start(()=>{
+        alert('done')
+      })
+
+    <Animated.View style={{
+      opacity: sellAnim,
+      top: sellAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [100, 0]
+      })
+    }}>
+      <Text>Sell</Text>
+    </Animated.View>
+    <Animated.View style={{
+      opacity: itAnim
+    }}>
+      <Text>It</Text>
+    </Animated.View>
