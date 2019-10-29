@@ -448,3 +448,42 @@
       return confirmPass === pass;
     }
     ...
+
+
+  ## 4.7 Adding Redux
+  ### 4.7.1 Defining Actions
+    Args: data
+    Return: {type: type, payload: 'something'}
+  ### 4.7.2 Defining Reducers
+    Args: state, action
+    Return: { ...state, auth: {response_of_payload} }
+  ### 4.7.3 Connecting Actions in UI
+    import {Action1, Action2} from 'actions';
+    mapStateToProps = state => {
+      return {ReducerName: state.reducerName}
+    }
+    mapDisPatchToProps = dispatch => {
+      return bindActionCreators({Action1, Action2}, dispatch);
+    }
+    connect(mapStateToProps, mapDispatchToProps)(ComponentName)
+  ### 4.7.4 Defining request in Actions
+    import axios from 'axios';
+    export const Action1 = () =>{
+      const request = axios({
+        url: 'some url',
+        method: 'POST/GET',
+        data: data
+      })
+      .then(response=>{
+        return response.data
+      })
+      .catch(e=>{
+        return false
+      });
+      return {
+        type: 'some type', 
+        payload: request
+      }
+    }
+
+

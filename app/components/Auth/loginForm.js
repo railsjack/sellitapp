@@ -5,6 +5,10 @@ import Input from '../utils/forms/inputs';
 import {getPlatform} from '../utils/misc';
 import ValidationRules from '../utils/forms/validationRules';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {signIn, signUp} from '../../store/actions/user_actions';
+
 class LoginForm extends Component {
   state = {
     type: 'Login',
@@ -12,24 +16,24 @@ class LoginForm extends Component {
     actionMode: 'I want to register',
     form: {
       email: {
-        value: '',
-        valid: false,
+        value: 'nahrae@gmail.com',
+        valid: true,
         type: 'textinput',
         rules: {
           isEmail: true,
         },
       },
       password: {
-        value: '',
-        valid: false,
+        value: 'fofjrj123',
+        valid: true,
         type: 'textinput',
         rules: {
           minLength: 6,
         },
       },
       confirmPassword: {
-        value: '',
-        valid: false,
+        value: 'fofjrj123',
+        valid: true,
         type: 'textinput',
         rules: {
           confirmPass: 'password',
@@ -88,8 +92,15 @@ class LoginForm extends Component {
         isFormValid = isFormValid && formCopy[key].valid;
       }
     }
+
+    console.log('isFormValid', isFormValid);
     if (isFormValid) {
-      console.log(formToSubmit);
+      if (this.state.type === 'Login') {
+        this.props.signIn(formToSubmit);
+      } else {
+        this.props.signUp(formToSubmit);
+      }
+      
     } else {
       hasErrors = true;
     }
@@ -176,4 +187,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginForm;
+const mapStateToProps = state => {
+  console.log('mapStateToProps state: ', state);
+  return {
+    User: state.User,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({signIn, signUp}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
