@@ -70,7 +70,7 @@ class LoginPanel extends Component {
               outputRange: [100, 0],
             }),
           }}>
-          <LoginForm />
+          <LoginForm User={this.props.User} goNext={this.props.goNext} />
         </Animated.View>
       </View>
     );

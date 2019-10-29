@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 
 import Input from '../utils/forms/inputs';
-import {getPlatform} from '../utils/misc';
+import {getPlatform, setToken, getToken} from '../utils/misc';
 import ValidationRules from '../utils/forms/validationRules';
 
 import {connect} from 'react-redux';
@@ -16,24 +16,24 @@ class LoginForm extends Component {
     actionMode: 'I want to register',
     form: {
       email: {
-        value: 'nahrae@gmail.com',
-        valid: true,
+        value: '',
+        valid: false,
         type: 'textinput',
         rules: {
           isEmail: true,
         },
       },
       password: {
-        value: 'fofjrj123',
-        valid: true,
+        value: '',
+        valid: false,
         type: 'textinput',
         rules: {
           minLength: 6,
         },
       },
       confirmPassword: {
-        value: 'fofjrj123',
-        valid: true,
+        value: '',
+        valid: false,
         type: 'textinput',
         rules: {
           confirmPass: 'password',
@@ -95,17 +95,28 @@ class LoginForm extends Component {
 
     if (isFormValid) {
       if (this.state.type === 'Login') {
-        this.props.signIn(formToSubmit);
+        this.props.signIn(formToSubmit).then(() => {
+          this.manageAccess();
+        });
       } else {
-        this.props.signUp(formToSubmit);
+        this.props.signUp(formToSubmit).then(() => {
+          this.manageAccess();
+        });
       }
-      
     } else {
       hasErrors = true;
     }
     this.setState({
       hasErrors,
     });
+  };
+
+  manageAccess = () => {
+    if (this.props.User) {
+      setToken(this.props.User.auth, () => {
+        this.props.goNext();
+      });
+    }
   };
 
   formHasErrors = () =>
@@ -187,6 +198,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log('mapStateToProps state: ', state);
   return {
     User: state.User,
   };
@@ -196,4 +208,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({signIn, signUp}, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginForm);
