@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 import Input from '../utils/forms/inputs';
 import {getPlatform} from '../utils/misc';
@@ -40,14 +40,14 @@ class LoginForm extends Component {
 
   updateInput = (name, value) => {
     let formCopy = this.state.form;
-		formCopy[name].value = value;
-		
-		let rules = formCopy[name].rules;
-		let valid = ValidationRules(value, rules, formCopy);
-		formCopy[name].valid = valid;
+    formCopy[name].value = value;
+
+    let rules = formCopy[name].rules;
+    let valid = ValidationRules(value, rules, formCopy);
+    formCopy[name].valid = valid;
 
     this.setState({
-      hasErrors: valid,
+      hasErrors: false,
       form: formCopy,
     });
   };
@@ -72,6 +72,39 @@ class LoginForm extends Component {
       />
     ) : null;
 
+  submitUser = () => {
+    let formToSubmit = {};
+    const formCopy = this.state.form;
+    let isFormValid = true;
+    let hasErrors = false;
+    for (let key in formCopy) {
+      if (this.state.type === 'Login') {
+        if (key !== 'confirmPassword') {
+          formToSubmit[key] = formCopy[key].value;
+          isFormValid = isFormValid && formCopy[key].valid;
+        }
+      } else {
+        formToSubmit[key] = formCopy[key].value;
+        isFormValid = isFormValid && formCopy[key].valid;
+      }
+    }
+    if (isFormValid) {
+      console.log(formToSubmit);
+    } else {
+      hasErrors = true;
+    }
+    this.setState({
+      hasErrors,
+    });
+  };
+
+  formHasErrors = () =>
+    this.state.hasErrors ? (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorLabel}>Oops, check your info</Text>
+      </View>
+    ) : null;
+
   render() {
     const platform = getPlatform();
     const {action, actionMode} = this.state;
@@ -93,13 +126,14 @@ class LoginForm extends Component {
           secureTextEntry
         />
         {this.confirmPassword()}
+        {this.formHasErrors()}
         <View
           style={
             platform === 'android'
               ? styles.buttonStyleAndroid
               : styles.buttonStyleIOS
           }>
-          <Button title={action} color="#fd9727" />
+          <Button title={action} onPress={this.submitUser} color="#fd9727" />
         </View>
         <View
           style={
@@ -131,6 +165,14 @@ const styles = StyleSheet.create({
   },
   buttonStyleIOS: {
     marginBottom: 0,
+  },
+  errorContainer: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  errorLabel: {
+    color: 'red',
+    fontFamily: 'Roboto-Bold',
   },
 });
 
