@@ -95,12 +95,24 @@ class LoginForm extends Component {
 
     if (isFormValid) {
       if (this.state.type === 'Login') {
-        this.props.signIn(formToSubmit).then(() => {
-          this.manageAccess();
+        this.props.signIn(formToSubmit).then(response => {
+          if (response.payload === false) {
+            this.setState({
+              hasErrors: true,
+            });
+          } else {
+            this.manageAccess();
+          }
         });
       } else {
-        this.props.signUp(formToSubmit).then(() => {
-          this.manageAccess();
+        this.props.signUp(formToSubmit).then(response => {
+          if (response.payload === false) {
+            this.setState({
+              hasErrors: true,
+            });
+          } else {
+            this.manageAccess();
+          }
         });
       }
     } else {
