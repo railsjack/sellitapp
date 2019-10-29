@@ -5,9 +5,27 @@ import {SIGNUP_URL, SIGNIN_URL} from '../../components/utils/misc';
 import axios from 'axios';
 
 export const signIn = data => {
+  const request = axios({
+    url: SIGNIN_URL,
+    method: 'POST',
+    data: {
+      email: data.email,
+      password: data.password,
+      returnSecureToken: true,
+    },
+    header: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      return response.data;
+    })
+    .catch(e => {
+      return false;
+    });
   return {
     type: SIGN_IN,
-    payload: 'something',
+    payload: request,
   };
 };
 
@@ -18,18 +36,18 @@ export const signUp = data => {
     data: {
       email: data.email,
       password: data.password,
-      returnSecureToken: true
+      returnSecureToken: true,
     },
     header: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   })
-  .then(response=>{
-    return response.data;
-  })
-  .catch(e=>{
-    return false;
-  })
+    .then(response => {
+      return response.data;
+    })
+    .catch(e => {
+      return false;
+    });
   return {
     type: SIGN_UP,
     payload: request,

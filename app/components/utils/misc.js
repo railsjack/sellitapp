@@ -6,7 +6,11 @@ export const SIGNUP_URL = `https://identitytoolkit.googleapis.com/v1/accounts:si
 export const SIGNIN_URL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`;
 // Firebase end
 
+const APP_DOMAIN = '@sellitapp'
 
+export const setToken = (token, cb) => {
+
+}
 
 
 

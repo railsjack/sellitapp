@@ -93,7 +93,6 @@ class LoginForm extends Component {
       }
     }
 
-    console.log('isFormValid', isFormValid);
     if (isFormValid) {
       if (this.state.type === 'Login') {
         this.props.signIn(formToSubmit);
@@ -188,7 +187,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log('mapStateToProps state: ', state);
   return {
     User: state.User,
   };

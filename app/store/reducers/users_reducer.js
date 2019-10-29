@@ -5,7 +5,11 @@ export default (state = {}, action) => {
     case SIGN_IN:
       return {
         ...state,
-        auth: {},
+        auth: {
+          uid: action.payload.localId,
+          token: action.payload.idToken,
+          refToken: action.payload.refreshToken
+        },
       };
     case SIGN_UP:
       return {
